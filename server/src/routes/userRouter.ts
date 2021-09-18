@@ -1,16 +1,9 @@
-import express, { Response, Request  } from 'express'
-import { getAllUsers, getUser, addUser, updateUser, deleteUser } from '../controllers/userController'
+import express from 'express'
+import { testing, getAllUsers, getUser, addUser, updateUser, deleteUser } from '../controllers/userController'
 
 const router = express.Router()
 
-// router.get('/api/user', [], (req: Request, res: Response) => {
-//     return res.send('user')
-// })
-
-// router.post('/api/user', (req: Request, res: Response) => {
-//     return res.send('new user created')
-// })
-
+router.get("/testing", testing)
 
 router.get("/users", getAllUsers)
 

@@ -9,7 +9,7 @@ app.use(userRouter)
 
 const PORT = 3001
 
-mongoose.connect('mongodb://localhost:27017/user', {
+mongoose.connect('mongodb://localhost:27017/capstone', {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true

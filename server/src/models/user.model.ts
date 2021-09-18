@@ -15,9 +15,5 @@ const userSchema: Schema = new Schema({
 
 const User = model<UserDoc, userModelInterface>('User', userSchema)
 
-// User.build({
-//     email: 'bev@gmail.com',
-//     password: 'password123'
-// })
 
 export { User }

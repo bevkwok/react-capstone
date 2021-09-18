@@ -2,6 +2,14 @@ import { Response, Request } from 'express'
 import { UserDoc } from '../interfaces/user'
 import { User  } from '../models/user.model'
 
+const testing = async(req: Request, res: Response): Promise<void> => {
+    try {
+        res.status(200).json({ testing: "testing" })
+    } catch (error) {
+        throw error
+    }
+}
+
 const getAllUsers = async(req: Request, res: Response): Promise<void> => {
     try {
         const users: UserDoc[] = await User.find()
@@ -80,4 +88,4 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export { getAllUsers, getUser, addUser, updateUser, deleteUser }
+export { testing, getAllUsers, getUser, addUser, updateUser, deleteUser }
