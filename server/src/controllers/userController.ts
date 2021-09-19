@@ -19,8 +19,8 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
         if(id.match(/^[0-9a-fA-F]{24}$/)){
             user = await User.findById(id)
         } else {
-            const email = req.params.id
-            user = await User.findOne({email: email})
+            const username = req.params.id
+            user = await User.findOne({username: username})
         }
         res.status(200).json({ user })
     } catch (error) {
@@ -30,11 +30,12 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
 
 const addUser = async(req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<UserDoc, "email" | "password">
+        const body = req.body as Pick<UserDoc, "username" | "email" | "password">
 
         const passwordHash = bcrypt.hashSync(body.password, 10);
 
         const user: UserDoc = new User({
+            username: body.username,
             email: body.email,
             password: passwordHash
         })
@@ -65,6 +66,7 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
             const updateUser: UserDoc | null = await User.findByIdAndUpdate(
                 { _id: id},
                 { 
+                    username: body.username,
                     email: body.email,
                     password: passwordHash
                 }

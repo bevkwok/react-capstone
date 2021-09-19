@@ -2,9 +2,14 @@ import { userModelInterface, UserDoc } from '../interfaces/user'
 import { model, Schema } from 'mongoose'
 
 const userSchema: Schema = new Schema({
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        maxlength: 23
+    },
     email: {
         type: String,
-        required: true,
         unique: true
     },
     password: {

@@ -12,7 +12,8 @@ const PORT = 3001
 mongoose.connect('mongodb://localhost:27017/capstone', {
     useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }, () => {
     console.log('connected to database for capstone');
 })
