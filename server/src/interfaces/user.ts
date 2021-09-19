@@ -1,13 +1,15 @@
 import { Document, Model } from "mongoose"
 
 export interface IUser {
-    email: string
+    username: string
+    email?: string
     password: string
 }
 
 // have all properties of mongoose.Document interface
 export interface UserDoc extends Document {
-    email: string
+    username: string
+    email?: string
     password: string
 }
 

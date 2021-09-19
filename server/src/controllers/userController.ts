@@ -1,14 +1,7 @@
 import { Response, Request } from 'express'
 import { UserDoc } from '../interfaces/user'
 import { User  } from '../models/user.model'
-
-const testing = async(req: Request, res: Response): Promise<void> => {
-    try {
-        res.status(200).json({ testing: "testing" })
-    } catch (error) {
-        throw error
-    }
-}
+import bcrypt from 'bcrypt'
 
 const getAllUsers = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -21,11 +14,15 @@ const getAllUsers = async(req: Request, res: Response): Promise<void> => {
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
+        let user: UserDoc | null
         const id = req.params.id
         if(id.match(/^[0-9a-fA-F]{24}$/)){
-            const user: UserDoc | null = await User.findById(id)
-            res.status(200).json({ user })
+            user = await User.findById(id)
+        } else {
+            const username = req.params.id
+            user = await User.findOne({username: username})
         }
+        res.status(200).json({ user })
     } catch (error) {
         throw error
     }
@@ -33,11 +30,14 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
 
 const addUser = async(req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<UserDoc, "email" | "password">
+        const body = req.body as Pick<UserDoc, "username" | "email" | "password">
+
+        const passwordHash = bcrypt.hashSync(body.password, 10);
 
         const user: UserDoc = new User({
+            username: body.username,
             email: body.email,
-            password: body.password
+            password: passwordHash
         })
 
         const newUser: UserDoc = await user.save()
@@ -57,16 +57,29 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
             params: { id },
             body,
         } = req
-        const updateUser: UserDoc | null = await User.findByIdAndUpdate(
-            { _id: id},
-            body
-        )
-        const allUsers: UserDoc[] = await User.find()
-        res.status(200).json({
-            message: "User updated",
-            user: updateUser,
-            users: allUsers,
-        })
+
+        const user = await User.findById(id)
+
+        if(user !== null && user.password !== body.password){
+            const passwordHash = bcrypt.hashSync(body.password, 10);
+        
+            const updateUser: UserDoc | null = await User.findByIdAndUpdate(
+                { _id: id},
+                { 
+                    username: body.username,
+                    email: body.email,
+                    password: passwordHash
+                }
+            )
+            const allUsers: UserDoc[] = await User.find()
+            res.status(200).json({
+                message: "User updated",
+                user: updateUser,
+                users: allUsers,
+            })
+        } else if (!user) {
+            res.status(404).send('User with that id does not exist')
+        }
     } catch (error) {
         throw error
     }
@@ -88,4 +101,4 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export { testing, getAllUsers, getUser, addUser, updateUser, deleteUser }
+export { getAllUsers, getUser, addUser, updateUser, deleteUser }
