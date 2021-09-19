@@ -11,7 +11,7 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true })
 
 const User = model<UserDoc, userModelInterface>('User', userSchema)
 

@@ -2,14 +2,6 @@ import { Response, Request } from 'express'
 import { UserDoc } from '../interfaces/user'
 import { User  } from '../models/user.model'
 
-const testing = async(req: Request, res: Response): Promise<void> => {
-    try {
-        res.status(200).json({ testing: "testing" })
-    } catch (error) {
-        throw error
-    }
-}
-
 const getAllUsers = async(req: Request, res: Response): Promise<void> => {
     try {
         const users: UserDoc[] = await User.find()
@@ -21,15 +13,29 @@ const getAllUsers = async(req: Request, res: Response): Promise<void> => {
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
+        let user: UserDoc | null
         const id = req.params.id
         if(id.match(/^[0-9a-fA-F]{24}$/)){
-            const user: UserDoc | null = await User.findById(id)
-            res.status(200).json({ user })
+            user = await User.findById(id)
+        } else {
+            const email = req.params.id
+            user = await User.findOne({email: email})
         }
+        res.status(200).json({ user })
     } catch (error) {
         throw error
     }
 }
+
+// const getUserByEmail = async (req: Request, res: Response): Promise<void> => {
+//     try {
+//         const email = req.params.email
+//         const user: UserDoc | null = await User.findOne({email:email})
+//         res.status(200).json({ user })
+//     } catch (error) {
+//         throw error
+//     }
+// }
 
 const addUser = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -88,4 +94,4 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export { testing, getAllUsers, getUser, addUser, updateUser, deleteUser }
+export { getAllUsers, getUser, addUser, updateUser, deleteUser }
