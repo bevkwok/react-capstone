@@ -1,6 +1,7 @@
 import { Response, Request } from 'express'
 import { UserDoc } from '../interfaces/user'
 import { User  } from '../models/user.model'
+import bcrypt from 'bcrypt'
 
 const getAllUsers = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -27,23 +28,15 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-// const getUserByEmail = async (req: Request, res: Response): Promise<void> => {
-//     try {
-//         const email = req.params.email
-//         const user: UserDoc | null = await User.findOne({email:email})
-//         res.status(200).json({ user })
-//     } catch (error) {
-//         throw error
-//     }
-// }
-
 const addUser = async(req: Request, res: Response): Promise<void> => {
     try {
         const body = req.body as Pick<UserDoc, "email" | "password">
 
+        const passwordHash = bcrypt.hashSync(body.password, 10);
+
         const user: UserDoc = new User({
             email: body.email,
-            password: body.password
+            password: passwordHash
         })
 
         const newUser: UserDoc = await user.save()
@@ -63,16 +56,28 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
             params: { id },
             body,
         } = req
-        const updateUser: UserDoc | null = await User.findByIdAndUpdate(
-            { _id: id},
-            body
-        )
-        const allUsers: UserDoc[] = await User.find()
-        res.status(200).json({
-            message: "User updated",
-            user: updateUser,
-            users: allUsers,
-        })
+
+        const user = await User.findById(id)
+
+        if(user !== null && user.password !== body.password){
+            const passwordHash = bcrypt.hashSync(body.password, 10);
+        
+            const updateUser: UserDoc | null = await User.findByIdAndUpdate(
+                { _id: id},
+                { 
+                    email: body.email,
+                    password: passwordHash
+                }
+            )
+            const allUsers: UserDoc[] = await User.find()
+            res.status(200).json({
+                message: "User updated",
+                user: updateUser,
+                users: allUsers,
+            })
+        } else if (!user) {
+            res.status(404).send('User with that id does not exist')
+        }
     } catch (error) {
         throw error
     }
