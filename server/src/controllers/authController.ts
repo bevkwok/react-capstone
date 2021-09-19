@@ -6,7 +6,10 @@ import { UserDoc } from '../interfaces/user'
 
 const logIn = async(req: Request, res: Response): Promise<void> => {
     try {
+        
         const body = req.body as Pick<UserDoc, "username" | "password">
+        console.log(body);
+
         const user: UserDoc | null = await User.findOne({ username: body.username })
         const correctPassword = (user === null) 
             ? false
@@ -22,7 +25,7 @@ const logIn = async(req: Request, res: Response): Promise<void> => {
         
             const token = jwt.sign(
                 userForToken, 
-                process.env.SECRET as string,
+                process.env.JWT_KEY as string,
                 { expiresIn: '24h' }
             )
 
