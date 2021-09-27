@@ -55,6 +55,3 @@ const addProduct = async(req: Request, res: Response): Promise<void> => {
 }
 
 export { getAllProducts, getProduct, addProduct }
-
-
-
