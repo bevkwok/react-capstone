@@ -5,7 +5,6 @@ export const listProducts = () => async ( dispatch: any ) => {
     dispatch({ type: PRODUCT_LIST_REQUEST })
     Axios.get("http://localhost:3001/products")
         .then(res => {
-            console.log("res.data", res.data);
             dispatch({ type: PRODUCT_LIST_SUCCESS, payload: res.data.products })
         }).catch(error => {
             let errorMessage = "Something went wrong"
@@ -33,8 +32,8 @@ export const detailsProduct = (productId: string) => async(dispatch: any) => {
     
     Axios.get(`http://localhost:3001/product/${productId}`)
     .then(res => {
-        console.log("res.data", res.data);
-        dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: res.data })
+        console.log("res.data", res.data.product);
+        dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: res.data.product })
     }).catch(error => {
         let errorMessage = "Something went wrong"
         if(error instanceof Error) {

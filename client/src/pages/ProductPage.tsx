@@ -13,7 +13,7 @@ const ProductPage = (props: any) => {
     const productId = props.match.params.id;
     const [qty, setQty]: [number, SetQty] = useState(1)
     const productDetails = useSelector((state: {productDetails: ProductState}) => state.productDetails)
-    console.log(productDetails);
+    console.log("productDetails", productDetails);
     const { loading, error, product } = productDetails;
 
     useEffect(() => {
@@ -22,6 +22,8 @@ const ProductPage = (props: any) => {
     const addToCartHandler = () => {
         props.history.push(`/cart/${productId}?qty=${qty}`)
     }
+    console.log("product", product);
+    
 
     return (
         <div>

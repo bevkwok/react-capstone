@@ -15,7 +15,6 @@ type ApiDataType = {
 
 type userAction = {
     type: string,
-    grocery: IGrocery
 }
 
 type IProduct = {
@@ -38,7 +37,7 @@ type ProductsState = {
 
 type ProductState = {
     loading: boolean,
-    product: IProduct | any,
+    product: IProduct | any | null,
     error?: any
 }
 

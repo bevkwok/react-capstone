@@ -2,7 +2,7 @@ import { PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL 
 
 const initialState: ProductState = {
     loading: true,
-    product: {},
+    product: null,
 };
 
 const productDetailsReducer = (state = initialState, action: any) => {
