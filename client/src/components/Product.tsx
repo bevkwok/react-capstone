@@ -1,5 +1,6 @@
 import React from 'react'
 import Rating from './Rating'
+import { Link } from 'react-router-dom'
 
 interface Prop {
     product: IProduct
@@ -8,13 +9,13 @@ interface Prop {
 const Product: React.FC<Prop> = ({ product }) => {
     return (
         <div key={product._id} className="card">
-            <a href={`/product/${product._id}`}>
+            <Link to={`/product/${product._id}`}>
                 <img className="img-medium" src={product.image} alt={product.name} />
-            </a>
+            </Link>
             <div className="card-body">
-                <a href={`/product/${product._id}`}>
+                <Link to={`/product/${product._id}`}>
                     <h2>{product.name}</h2>
-                </a>
+                </Link>
                 <div className="price">${product.price}</div>
                 <Rating rating={product.rating} numReviews={product.numReviews}/>
             </div>

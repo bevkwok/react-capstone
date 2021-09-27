@@ -3,6 +3,7 @@ import thunk from "redux-thunk"
 import userReducer from "./reducers/userReducers"
 import productListReducer from "./reducers/productListReducer"
 import productDetailsReducer from "./reducers/productDetailsReducer"
+import cartReducer from "./reducers/cartReducers"
 
 const initialState = {};
 const middleware = [thunk];
@@ -16,7 +17,8 @@ declare global {
 const reducer = combineReducers({
     user: userReducer,//user key ma store gareko
     productList: productListReducer,
-    productDetails: productDetailsReducer
+    productDetails: productDetailsReducer,
+    cart: cartReducer
 });
 
 const store = createStore(
