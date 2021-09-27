@@ -12,7 +12,6 @@ app.use(userRouter)
 app.use(authRouter)
 app.use(productRouter)
 
-
 const PORT = 3001
 
 mongoose.connect('mongodb://localhost:27017/capstone', {

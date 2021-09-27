@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk"
 import userReducer from "./reducers/userReducers"
-import uiReducer from "./reducers/uiReducers"
 import productListReducer from "./reducers/productListReducer"
 import productDetailsReducer from "./reducers/productDetailsReducer"
 
@@ -16,7 +15,6 @@ declare global {
 
 const reducer = combineReducers({
     user: userReducer,//user key ma store gareko
-    UI: uiReducer,
     productList: productListReducer,
     productDetails: productDetailsReducer
 });

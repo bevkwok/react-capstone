@@ -15,6 +15,7 @@ const HomePage = () => {
     const productList = useSelector((state: {productList: ProductsState}) =>  state.productList);
     const { loading, error, products } = productList;
 
+    
     useEffect(() => {
         dispatch(listProducts());
     }, [dispatch])

@@ -19,7 +19,7 @@ type userAction = {
 }
 
 type IProduct = {
-    _id: string
+    _id?: any
     name: string
     category: string
     image: string
