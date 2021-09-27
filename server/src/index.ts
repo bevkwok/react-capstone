@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express'
 import mongoose from 'mongoose'
 import { json } from 'body-parser'
@@ -7,6 +8,14 @@ import { productRouter } from './routes/productRouter'
 require("dotenv").config();
 
 const app = express()
+
+const allowedOrigins = ['http://localhost:3001'];
+
+const options: cors.CorsOptions = {
+    origin: allowedOrigins
+};
+
+app.use(cors(options));
 app.use(json())
 app.use(userRouter)
 app.use(authRouter)
