@@ -18,7 +18,7 @@ type userAction = {
     grocery: IGrocery
 }
 
-type Product = {
+type IProduct = {
     _id: string
     name: string
     category: string
@@ -30,5 +30,24 @@ type Product = {
     description: string
 }
 
+type ProductsState = {
+    loading: boolean,
+    products: IProduct[],
+    error?: any
+}
+
+type ProductState = {
+    loading: boolean,
+    product: IProduct | any,
+    error?: any
+}
+
+type ProductsAction = {
+    type: string
+    products: IProduct[]
+}
+
 type SetLoading = (loading: boolean) => void;
 type SetError = (error: any) => void;
+
+type ProductDispatchType = (args: ProductsAction) => ProductsAction
