@@ -50,3 +50,16 @@ type SetLoading = (loading: boolean) => void;
 type SetError = (error: any) => void;
 
 type ProductDispatchType = (args: ProductsAction) => ProductsAction
+
+type CartItem = {
+    name: string
+    image: string
+    price: number
+    countInStock: number
+    product: string
+    qty: string
+}
+
+type CartItemState = {
+    cartItems: CartItem[] | null
+}
