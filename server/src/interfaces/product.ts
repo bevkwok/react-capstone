@@ -2,7 +2,6 @@ import { Document, Model } from "mongoose"
 
 // have all properties of mongoose.Document interface
 export interface ProductDoc extends Document {
-    _id: string
     name: string
     category: string
     image: string
