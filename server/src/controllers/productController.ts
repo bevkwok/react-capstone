@@ -14,6 +14,7 @@ const getAllProducts = async(req: Request, res: Response): Promise<void> => {
     }
 }
 
+
 const getProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const id = req.params.id
@@ -55,3 +56,4 @@ const addProduct = async(req: Request, res: Response): Promise<void> => {
 }
 
 export { getAllProducts, getProduct, addProduct }
+

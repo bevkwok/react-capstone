@@ -15,11 +15,10 @@ type ApiDataType = {
 
 type userAction = {
     type: string,
-    grocery: IGrocery
 }
 
-type Product = {
-    _id: string
+type IProduct = {
+    _id?: any
     name: string
     category: string
     image: string
@@ -30,5 +29,24 @@ type Product = {
     description: string
 }
 
+type ProductsState = {
+    loading: boolean,
+    products: IProduct[],
+    error?: any
+}
+
+type ProductState = {
+    loading: boolean,
+    product: IProduct | any | null,
+    error?: any
+}
+
+type ProductsAction = {
+    type: string
+    products: IProduct[]
+}
+
 type SetLoading = (loading: boolean) => void;
 type SetError = (error: any) => void;
+
+type ProductDispatchType = (args: ProductsAction) => ProductsAction

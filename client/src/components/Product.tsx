@@ -2,7 +2,7 @@ import React from 'react'
 import Rating from './Rating'
 
 interface Prop {
-    product: Product
+    product: IProduct
 }
 
 const Product: React.FC<Prop> = ({ product }) => {
