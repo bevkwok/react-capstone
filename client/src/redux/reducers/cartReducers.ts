@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../types";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../types";
 
 
 const initialState: CartItemState = {
@@ -8,7 +8,7 @@ const initialState: CartItemState = {
 const cartReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case CART_ADD_ITEM:
-            const item = action.payload;
+            const item = action.payload
             if(state.cartItems !== null) {
                 // checking if cart have the item already
                 const existItem = state.cartItems.find(citem => citem.product === item.product)
@@ -27,6 +27,8 @@ const cartReducer = (state = initialState, action: any) => {
             } else {
                 return {...state, cartItems: [item]}
             }
+        case CART_REMOVE_ITEM:
+            return { ...state, cartItems: state.cartItems?.filter( cItem => cItem.product !== action.payload)}
         default:
             return state;
     }

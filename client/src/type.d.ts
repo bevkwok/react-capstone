@@ -57,7 +57,7 @@ type CartItem = {
     price: number
     countInStock: number
     product: string
-    qty: string
+    qty: number
 }
 
 type CartItemState = {
