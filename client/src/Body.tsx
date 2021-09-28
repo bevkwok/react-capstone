@@ -7,11 +7,13 @@ import ProductPage from './pages/ProductPage'
 import SigninPage from './pages/SigninPage';
 
 function Body() {
-    const cart = useSelector((state: any) => state.cart );
-    const { cartItems } = cart;
-    console.log("cart", cart);
+    const cart = useSelector((state: any) => state.cart )
+    const { cartItems } = cart
+
+    const userSignin = useSelector((state: any) => state.userSignin )
+    const { userInfo } = userSignin
+    console.log(userInfo);
     
-    console.log("cartItems", cartItems);
     
     
     return (
@@ -33,7 +35,14 @@ function Body() {
                                 : ''
                             }
                         </Link>
-                        <Link className="header-link" to="/signin">Sign In</Link>
+                        {
+                            userInfo ? (
+                                <Link className="header-link" to="#">
+                                    {userInfo.username}'s Info</Link>
+                            ) : (
+                                <Link className="header-link" to="/signin">Sign In</Link>
+                            )
+                        }
                         </div>
                     </header>
                     <main>
