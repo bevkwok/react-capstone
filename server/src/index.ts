@@ -8,30 +8,36 @@ import { productRouter } from './routes/productRouter'
 require("dotenv").config();
 
 const app = express()
+const PORT = 3001
 
 const allowedOrigins = ['http://localhost:3000'];
 
-const options: cors.CorsOptions = {
+const corsOptions: cors.CorsOptions = {
     origin: allowedOrigins
 };
 
-app.use(cors(options));
+app.use(cors(corsOptions));
 app.use(json())
 app.use(userRouter)
 app.use(authRouter)
 app.use(productRouter)
 
-const PORT = 3001
 
-mongoose.connect('mongodb://localhost:27017/capstone', {
-    useCreateIndex: true,
+const uri: string = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.sgjh9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+
+const options = { useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
-}, () => {
-    console.log('connected to database for capstone');
-})
+}
+mongoose.set("useFindAndModify", false)
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-})
+mongoose
+    .connect(uri, options)
+    .then(() =>
+        app.listen(PORT, () => {
+            console.log(`Server is listening on port ${PORT}`);
+        })
+    )
+    .catch(error => {
+        throw error
+    })
