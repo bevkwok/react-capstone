@@ -16,11 +16,12 @@ const logIn = async(req: Request, res: Response): Promise<void> => {
             : await bcrypt.compare(body.password, user.password);
 
         if(!correctPassword || !user) {
-            res.status(401).json({ msg: "Uable to log in"})
+            res.status(401).json({ msg: "Invalid username or password"})
         } else {
             const userForToken = {
                 username: user.username,
-                id: user._id
+                _id: user._id,
+                isAdmin: user.isAdmin
             }
         
             const token = jwt.sign(
