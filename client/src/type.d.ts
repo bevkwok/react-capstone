@@ -45,7 +45,8 @@ type ProductsAction = {
     type: string
     products: IProduct[]
 }
-
+type SetUsername = (username: any) => void;
+type SetPassword = (password: any) => void;
 type SetLoading = (loading: boolean) => void;
 type SetError = (error: any) => void;
 
