@@ -124,6 +124,15 @@ a.brand {
     font-weight: bold;
     padding: 8rem;
 }
+.badge {
+    background-color: #d10000;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: 0.2rem 0.6rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-left: 0.3rem;
+}
 .fa-heart{
     padding: 1rem;
     font-size: 4.5rem;
