@@ -1,58 +1,51 @@
-import { SET_USER, SET_ERRORS, LOADING_UI, CLEAR_ERRORS, SET_UNAUTHENTICATED, LOADING_USER } from "../types"
-import axios from "axios"
+import Axios from "axios";
+import { USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNOUT, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL} from "../types";
 
-export const loginUser = (userData: any, history: any) => (dispatch: any) => {
-    dispatch({ type: LOADING_UI })
+export const signin = (username: string, password: string) => (dispatch: any) => {
+    dispatch({ type: USER_SIGNIN_REQUEST, payload: { username, password } })
 
-    axios.post("login", userData)
-    .then((res) => {
-        const token = `Bearer ${res.data.token}`;
-        localStorage.setItem("token", `Bearer ${res.data.token}`);//setting token to local storage
-        axios.defaults.headers.common["Authorization"] = token;//setting authorize token to header in axios
-        dispatch(getUserData());
-        dispatch({ type: CLEAR_ERRORS });
-        console.log("success");
-        history.push("/");//redirecting to index page after login success
-    })
-
-    .catch((err) => {
-        console.log(err);
-        dispatch({
-            type: SET_ERRORS,
-            payload: err.response.data
-        });
+    Axios.post("http://localhost:3001/auth/login", {username, password})
+    .then(res => {
+        dispatch({ type: USER_SIGNIN_SUCCESS, payload: res.data })
+        localStorage.setItem("userInfo", JSON.stringify(res.data))
+        
+    }).catch(error => {
+        let errorMessage = "Something went wrong"
+        if(error.response.status === 401) {
+            errorMessage = error.response.data.msg
+        } else if(error instanceof Error) {
+            errorMessage = error.message
+        }
+        dispatch({ type: USER_SIGNIN_FAIL, payload: errorMessage })
     });
 }
 
-//for fetching authenticated user information
-export const getUserData = () => (dispatch: any) => {
-    dispatch({ type: LOADING_USER });
-    axios.get("/user")
-        .then(res => {
-            console.log("user data", res.data);
-            dispatch({
-                type: SET_USER,
-                payload: res.data
-            });
-        }).catch(err => {
-            console.log(err);
-        });
+export const signout = () => (dispatch: any) => {
+    localStorage.removeItem('cartItems')
+    localStorage.removeItem('userInfo')
+    localStorage.removeItem('shippingAddress')
+    dispatch({ type: USER_SIGNOUT })
+    document.location.href = '/'
 }
 
-export const logoutUser = () => (dispatch: any) => {
-    localStorage.removeItem("token")
-    delete axios.defaults.headers.common["Authorization"]
-    dispatch({
-        type: SET_UNAUTHENTICATED
-    })
-    window.location.href = "/login" //redirect to login page
-}
+export const register = (username: string, email: string, password: string) => (dispatch: any) => {
+    dispatch({ type: USER_REGISTER_REQUEST, payload: { username, password } })
 
-//    NOTE:your server must return response like as follow for getting the authenticated user information getUserData function must return response as
-//    {
-//     “credentials”: {
-//     “createdAt”: “2020–01–30T10:29:44.898Z”,
-//     “email”: “bikash@gmail.com”,
-//     “userId”: “D4hCBB4RcAdTjawNCQ0K4ItED563”
-//     }
-//    }
+    Axios.post("http://localhost:3001/register", {username, email, password})
+    .then(res => {
+        dispatch({ type: USER_REGISTER_SUCCESS, payload: res.data })
+        dispatch({ type: USER_SIGNIN_SUCCESS, payload: res.data })
+        localStorage.setItem("userInfo", JSON.stringify(res.data))
+        
+    }).catch(error => {
+        console.log(error);
+        console.log("error.response----", error.response);
+        let errorMessage = "Something went wrong"
+        if(error.response.status === 400) {
+            errorMessage = error.response.data.msg
+        } else if(error instanceof Error) {
+            errorMessage = error.message
+        }
+        dispatch({ type: USER_REGISTER_FAIL, payload: errorMessage })
+    });
+}

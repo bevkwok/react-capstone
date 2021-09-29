@@ -1,7 +1,8 @@
 interface IUser {
     _id: string
-    email: string
+    email?: string
     password: string
+    isAdmin: boolean
     createdAt?: string
     updatedAt?: string
 }
@@ -15,6 +16,18 @@ type ApiDataType = {
 
 type userAction = {
     type: string,
+}
+
+type userState = {
+    loading: boolean,
+    userInfo: IUser | any | null,
+    error?: any
+}
+
+type signinUserState = {
+    loading: boolean,
+    userSignin: IUser | any | null,
+    error?: any
 }
 
 type IProduct = {
@@ -45,7 +58,8 @@ type ProductsAction = {
     type: string
     products: IProduct[]
 }
-
+type SetUsername = (username: any) => void;
+type SetPassword = (password: any) => void;
 type SetLoading = (loading: boolean) => void;
 type SetError = (error: any) => void;
 
@@ -62,4 +76,6 @@ type CartItem = {
 
 type CartItemState = {
     cartItems: CartItem[] | null
+    shippingAddress: any
+    paymentMethod: string
 }

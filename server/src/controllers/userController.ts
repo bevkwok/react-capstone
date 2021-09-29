@@ -30,14 +30,15 @@ const getUser = async (req: Request, res: Response): Promise<void> => {
 
 const addUser = async(req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<UserDoc, "username" | "email" | "password">
+        const body = req.body as Pick<UserDoc, "username" | "email" | "password" | "isAdmin">
 
         const passwordHash = bcrypt.hashSync(body.password, 10);
 
         const user: UserDoc = new User({
             username: body.username,
             email: body.email,
-            password: passwordHash
+            password: passwordHash,
+            isAdmin: body.isAdmin
         })
 
         const newUser: UserDoc = await user.save()
@@ -68,15 +69,16 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
                 { 
                     username: body.username,
                     email: body.email,
-                    password: passwordHash
+                    password: passwordHash,
+                    isAdmin: body.isAdmin
                 }
             )
-            const allUsers: UserDoc[] = await User.find()
+
             res.status(200).json({
                 message: "User updated",
                 user: updateUser,
-                users: allUsers,
             })
+            
         } else if (!user) {
             res.status(404).send('User with that id does not exist')
         }

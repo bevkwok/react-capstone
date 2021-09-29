@@ -87,13 +87,30 @@ button {
     color: white;
 }
 
-input,
 select,
 textarea {
     padding: 0.1rem 0.7rem;
     font-size: 1.5rem;
+}
+
+input {
     border-radius: 0%;
     border: transparent;
+    font-size: 1.7rem;
+    padding: 0.8rem 1.4rem;
+    background-color: rgb(237, 241, 250);
+    border-bottom: 2px solid rgb(68, 68, 68);
+}
+
+input:focus {
+    border-radius: 0%;
+    outline: transparent;
+    border-bottom: 2px solid rgb(68, 68, 68);
+}
+
+input:hover {
+    background-color: rgb(221, 221, 221);
+    border-bottom: 2px solid rgb(68, 68, 68);
 }
 
 button {
@@ -109,7 +126,7 @@ button.primary {
 button.block{
     width: 100%;
 }
-input:hover,
+
 select:hover,
 textarea:hover,
 button:hover {
@@ -252,4 +269,21 @@ img.img-small {
     padding: 1rem;
     color: #a02020;
     background-color: #fde0e0;
+}
+
+/* Form */
+.form {
+    max-width: 60rem;
+    margin: 0 auto
+}
+
+.form > div {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.form label {
+    margin: 1rem 0;
+    display: block;
 }

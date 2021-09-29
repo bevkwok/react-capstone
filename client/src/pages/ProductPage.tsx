@@ -24,7 +24,9 @@ const ProductPage = (props: any) => {
 
     return (
         <div>
-            <Link to='/'>Back to Home</Link>
+            <div className="cool-link" >
+                <Link className="cool-link-text" to='/'>Back to Home</Link>
+            </div>
             {
                 
                 loading ? <LoadingBox />
