@@ -55,13 +55,19 @@ const register = async(req: Request, res: Response): Promise<void> => {
             isAdmin: body.isAdmin
         })
 
+        if(await User.findOne({username: body.username})) {
+            res.status(400).json({ msg: "Username has been taken"})
+        } else if (await User.findOne({email: body.email})){
+            res.status(400).json({ msg: "Email has been taken"})
+        }
+
         const newUser: UserDoc = await user.save()
         const userForToken = {
             username: newUser.username,
             _id: newUser._id,
             isAdmin: newUser.isAdmin
         }
-    
+
         const token = jwt.sign(
             userForToken, 
             process.env.JWT_KEY as string,
@@ -77,7 +83,8 @@ const register = async(req: Request, res: Response): Promise<void> => {
         })
 
     } catch (error) {
-        throw error
+        console.log(error);
+        
     }
 }
 
