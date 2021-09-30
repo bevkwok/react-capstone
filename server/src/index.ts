@@ -5,6 +5,7 @@ import { json } from 'body-parser'
 import { userRouter } from './routes/userRouter'
 import { authRouter } from './routes/authRouter'
 import { productRouter } from './routes/productRouter'
+import { stripeRouter } from './routes/stripeRouter';
 require("dotenv").config();
 
 const app = express()
@@ -21,7 +22,7 @@ app.use(json())
 app.use(userRouter)
 app.use(authRouter)
 app.use(productRouter)
-
+app.use(stripeRouter)
 
 const uri: string = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.sgjh9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 
