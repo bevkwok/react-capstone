@@ -3,7 +3,8 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM, EMPTY_CART, CART_SAVE_SHIPPING_ADDRESS
 const initialState: CartItemState = {
     cartItems: localStorage.getItem('cartItems')? JSON.parse(localStorage.getItem('cartItems') || '' ) : [],
     shippingAddress: localStorage.getItem('shippingAddress')? JSON.parse(localStorage.getItem('shippingAddress') || '' ) : {},
-    paymentMethod: 'Stripe'
+    paymentMethod: 'Stripe',
+    placeOrder: null
 };
 
 const cartReducer = (state = initialState, action: any) => {
@@ -31,11 +32,11 @@ const cartReducer = (state = initialState, action: any) => {
         case CART_REMOVE_ITEM:
             return { ...state, cartItems: state.cartItems?.filter( cItem => cItem.product !== action.payload)}
         case EMPTY_CART:
-            return state
+            return { ...state, cartItems: [] }
         case CART_SAVE_SHIPPING_ADDRESS:
             return { ...state, shippingAddress: action.payload}
         case CART_SAVE_PAYMENT_METHOD:
-            return { ...state, paymentMethod: action.payload };
+            return { ...state, paymentMethod: action.payload }
         default:
             return state;
     }

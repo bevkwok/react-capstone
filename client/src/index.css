@@ -66,6 +66,9 @@ h2:hover {
     color: #df0000;
     text-decoration: underline;
 }
+.center-text {
+    text-align: center;
+}
 a {
     text-decoration: none;
     font-size: 1.8rem;
@@ -125,6 +128,24 @@ button.primary {
 }
 button.block{
     width: 100%;
+}
+
+.cool-link {
+    text-decoration: none;
+    color: black;
+    font-family: 'Playfair Display SC', serif;
+    font-weight: 700;
+}
+
+.cool-link-text {
+    color: black;
+}
+
+.cool-link :hover {
+    text-decoration: underline;
+    color: #ffffff;
+    background-color: rgb(212, 212, 212);
+    
 }
 
 select:hover,
@@ -189,6 +210,17 @@ a.header-link{
 .min-27 {
     min-width: 27rem;
 }
+.padding-2 {
+    padding: 0rem 2rem;
+}
+
+.padding-1 {
+    padding: 1rem 1rem;
+}
+
+.padding-b-1 {
+    padding-bottom: 2rem;
+}
 
 
 /* image */
@@ -248,6 +280,10 @@ img.img-small {
 }
 
 /* Alert */
+.loading {
+    display: block !important;
+}
+
 .success {
     color: #20a020;
 }
@@ -285,5 +321,49 @@ img.img-small {
 
 .form label {
     margin: 1rem 0;
+}
+
+/* Dropdown */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    display: none;
+    /* left: 4.5rem; */
+    /* min-width: 1rem; */
+    /* max-width: 11rem; */
+    padding: 0.6rem 1rem;
+    z-index: 1;
+    background-color: rgb(212, 212, 212);
+    color: white;
+    margin: 0;
+    margin-top: 0.4rem;
+    border-radius: 0%;
+}
+
+.dropdown:hover .dropdown-content {
     display: block;
+}
+
+/* Checkout Steps */
+.checkout-steps > div {
+    border-top: 0.3rem #c0c0c0 solid;
+    color: #c0c0c0;
+    flex: 1;
+    padding: 1rem;
+    font-weight: bold;
+}
+.checkout-steps > div.active {
+    border-top-color: #d10000;
+    color: #d10000;
+}
+
+.stripe-input {
+    background-color: rgb(245, 245, 245);
+    padding: 2rem;
+    /* border: solid red 1px; */
+    margin: 1.5rem 0rem;
 }

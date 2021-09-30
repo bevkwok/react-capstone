@@ -49,7 +49,7 @@ const SigninPage = (props: any) => {
                 <div>
                     <label />
                     <div>
-                        New Customer? <Link to="/register">Creat New Account</Link>
+                        New Customer? <Link to={`/register?redirect=${redirect}`}>Creat New Account</Link>
                     </div>
                 </div>
             </form>
