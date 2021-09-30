@@ -26,7 +26,7 @@ type userState = {
 
 type signinUserState = {
     loading: boolean,
-    userSignin: IUser | any | null,
+    userInfo: IUser | any | null,
     error?: any
 }
 
@@ -74,8 +74,17 @@ type CartItem = {
     qty: number
 }
 
+type orderInfo = {
+    itemsPrice: number,
+    shippingPrice: number,
+    taxPrice: number,
+    totalPrice: number,
+}
+
 type CartItemState = {
     cartItems: CartItem[] | null
     shippingAddress: any
     paymentMethod: string
+    placeOrder?: orderInfo | null | any
 }
+
