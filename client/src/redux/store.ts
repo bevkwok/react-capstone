@@ -4,6 +4,7 @@ import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers"
 import productListReducer from "./reducers/productListReducer"
 import productDetailsReducer from "./reducers/productDetailsReducer"
 import cartReducer from "./reducers/cartReducers"
+import OrderReducer from "./reducers/orderReducers"
 
 const initialState = {};
 const middleware = [thunk];
@@ -19,7 +20,8 @@ const reducer = combineReducers({
     productDetails: productDetailsReducer,
     cart: cartReducer,
     userSignin: userSigninReducer,
-    userRegister: userRegisterReducer
+    userRegister: userRegisterReducer,
+    order: OrderReducer
 });
 
 const store = createStore(
