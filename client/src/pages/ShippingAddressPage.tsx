@@ -5,12 +5,10 @@ import { saveShippingAddress } from '../redux/actions/cartAction';
 
 const ShippingAddressPage = (props: any) => {
     const userSigninData = useSelector((state: {userSignin: signinUserState}) => state.userSignin);
-    console.log("THIS IS THE USER INFO userSignin", userSigninData)
-    const { userSignin } = userSigninData;
+    const { userInfo } = userSigninData;
     const cart = useSelector((state: {cart: CartItemState}) => state.cart);
     const { shippingAddress } = cart;
-    console.log("THIS IS THE USER INFO", userSignin)
-    if (!userSignin) {
+    if (!userInfo) {
         props.history.push('/signin');
     }
     const [fullName, setFullName] = useState(shippingAddress.fullName);
@@ -31,7 +29,7 @@ const ShippingAddressPage = (props: any) => {
             <CheckoutSteps step1 step2 ></CheckoutSteps>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    <h1>Shipping Address</h1>
+                    <h1 className="center-text">Shipping Address</h1>
                 </div>
                 <div>
                     <label htmlFor="fullName">Full Name</label>
